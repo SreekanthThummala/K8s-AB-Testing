@@ -1,0 +1,26 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: trivago
+  labels:
+    app: trivago
+spec:
+  hosts:
+    - trivago.local
+  gateways:
+    - trivago
+  http:
+    - route:
+        - destination:
+            host: trivago-golang
+      match:
+        - headers:
+            x-api-version:
+              exact: v1.0.0
+    - route:
+        - destination:
+            host: trivago-java
+      match:
+        - headers:
+            x-api-version:
+              exact: v2.0.0
